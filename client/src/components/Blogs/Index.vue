@@ -1,19 +1,25 @@
 <template>
 	<div>
 		<div class="blog-header">
-			<h2>ส่วนจัดการบล็อก</h2>
+			<h2>ส่วนจดัการบลอ็ก</h2>
 			<div>
-				<div>
-					<!-- เพิ่มตัวค้นหา -->
-					<form>
-						<input type="text" v-model="search" placeholder="Search">
-					</form>
-				</div>
-				<!-- สร้าง blog -->
-				<button v-on:click="navigateTo('/blog/create')">create blog</button>
-				<br>
+				<form>
+					<input type="text" v-model="search" placeholder="Search">
+				</form>
+			</div>
+			<div>
+				<button v-on:click="navigateTo('/blog/create')">create
+					blog</button>
+				<ul class="categories">
+					<li v-for="cate in category" v-bind:key="cate.index"><a v-on:click.prevent="setCategory(cate)"
+							href="#">{{ cate }}</a></li>
+					<li class="clear"><a v-on:click.prevent="setCategory(' ')" href="#">Clear</a></li>
+				</ul>
+				<div class="clearfix"></div>
+
 				<strong> จํานวน blog: </strong> {{blogs.length}}
 			</div>
+
 			<br>
 		</div>
 		<div v-if="blogs.length === 0" class="empty-blog">
@@ -21,6 +27,7 @@
 		</div>
 		<div v-for="blog in blogs" v-bind:key="blog.id" class="blog-list">
 			<!-- <p>id: {{ blog.id }}</p> -->
+
 			<div class="blog-pic">
 				<transition name="fade">
 					<div class="thumbnail-pic" v-if="blog.thumbnail != 'null'">
@@ -33,9 +40,11 @@
 			<div class="blog-info">
 				<p><strong>Category:</strong> {{ blog.category }}</p>
 				<p><strong>Create:</strong> {{ blog.createdAt }}</p>
+				<div id="blog-list-bottom">
+					<div v-if="blogs.length === results.length && results.length > 0">
+						โหลดข้อมูลครบแล้ว</div>
+				</div>
 				<!-- <p>status: {{ blog.status }}</p> -->
-
-
 				<p>
 					<button v-on:click="navigateTo('/blog/'+ blog.id)">ดู
 						blog</button>
@@ -46,17 +55,22 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
+		<div id="blog-list-bottom">Blog Bottom</div>
 	</div>
 </template>
 <script>
 import BlogsService from "@/services/BlogsService";
 import _ from 'lodash'
+import ScrollMonitor from 'scrollMonitor'
+
 export default {
 	data() {
 		return {
 			blogs: [],
 			BASE_URL: "http://localhost:8081/assets/uploads/",
 			search: '',
+			results: [],
+
 		};
 	},
 	async created() {
@@ -108,8 +122,106 @@ export default {
 				this.blogs = (await BlogsService.index(value)).data
 			}
 		}
-	}
+	},
+	updated() {
+		let sens = document.querySelector('#blog-list-bottom')
+		pageWatcher = ScrollMonitor.create(sens)
+		pageWatcher.enterViewport(function () {
+			console.log('Im here, bottom of blog')
+		})
+	},
+	eforeUpdated() {
+		if (pageWatcher) {
+			pageWatcher.destroy()
+			pageWatcher = null
+		}
+	},
+	appendResults: function () {
+		if (this.blogs.length < this.results.length) {
+			let toAppend = this.results.slice(
+				this.blogs.length,
+				LOAD_NUM + this.blogs.length
+			)
+			this.blogs = this.blogs.concat(toAppend)
+		}
+	},
+	watch: {
+		search: _.debounce(async function (value) {
+			const route = {
+				name: 'blogs'
+			}
+			if (this.search !== '') {
+				route.query = {
+					search: this.search
+				}
+			}
+			console.log('search: ' + this.search)
+			this.$router.push(route)
+		}, 700),
+		'$route.query.search': {
+			immediate: true,
+			async handler(value) {
+				this.blogs = []
+				this.results = []
+				this.results = (await BlogsService.index(value)).data
+				this.appendResults()
+			}
+			, updated() {
+				let sens = document.querySelector('#blog-list-bottom')
+				pageWatcher = ScrollMonitor.create(sens)
+				pageWatcher.enterViewport(this.appendResults)
+			},
+		}
+	},
+	watch: {
+		search: _.debounce(async function (value) {
+			const route = {
+				name: 'blogs'
+			}
+			if (this.search !== '') {
+				route.query = {
+					search: this.search
+				}
+			}
+			console.log('search: ' + this.search)
+			this.$router.push(route)
+		}, 700),
+		'$route.query.search': {
+			immediate: true,
+			async handler(value) {
+				this.blogs = []
+				this.results = []
+				this.loading = true
+				this.results = (await BlogsService.index(value)).data
+				this.appendResults()
+				this.results.forEach(blog => {
+					if (this.category.length > 0) {
+						// console.log(this.category.indexOf(blog.category))
+						if (this.category.indexOf(blog.category) === -1) {
+							this.category.push(blog.category)
+						}
+					} else {
+
+						this.category.push(blog.category)
+					}
+				})
+				this.loading = false
+				this.search = value
+				// console.log(this.category) 
+			}
+		}
+	},
+	setCategory (keyword) { 
+ if(keyword === ' '){ 
+ this.search = '' 
+ console.log('null') 
+ } else {
+ this.search = keyword 
+ } 
+},
 }
+let LOAD_NUM = 3
+let pageWatcher
 
 </script>
 <style scoped>
@@ -153,5 +265,31 @@ empty-blog {
 	max-width: 900px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+#blog-list-bottom {
+	padding: 4px;
+	text-align: center;
+	background: seagreen;
+	color: white;
+}
+.categories {
+ padding: 0;
+ list-style: none;
+ float: left;
+}
+.categories li {
+ float: left;
+ padding: 2px;
+}
+.categories li a {
+ padding: 5px 10px 5px 10px;
+ background:paleturquoise; 
+ color: black;
+ text-decoration: none;
+}
+.categories li.clear a {
+ background: tomato;
+ color: white
 }
 </style>
