@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <h1>Show User</h1>
-    <p>id: {{ user.id }}</p>
-    <p>ชื่อ - นามสกุล {{ user.name }} - {{ user.lastname }}</p>
-    <p>email: {{ user.email }}</p>
-    <p>password: {{ user.password }}</p>
+  <div class="container blog-header">
+    <p class="h2">{{ user.name}}</p>
+    <form class="form-inline form-search">
+          <dl class="row">
+            <dt class="col-sm-3"> User ID</dt>
+            <dd class="col-sm-9">{{ user.id }}</dd>
+            <dt class="col-sm-3"> Name - Lastname</dt>
+            <dd class="col-sm-9">{{ user.name }} - {{ user.lastname }} </dd>
+            <dt class="col-sm-3"> Email</dt>
+            <dd class="col-sm-9">{{ user.email }} </dd>
+            <dt class="col-sm-3"> Password</dt>
+            <dd class="col-sm-9">{{ user.password }} </dd></dl>
+    </form>
   </div>
 </template>
 <script>
