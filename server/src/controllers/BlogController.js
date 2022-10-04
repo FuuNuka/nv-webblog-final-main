@@ -1,36 +1,36 @@
 const { Blog } = require('../models')
 module.exports = {
     // get all blog
-    async index (req, res) {
+    async index(req, res) {
         try {
-        let blogs = null
-        const search = req.query.search
-        // console.log('search key: ' + search)
-        if (search) {
-        blogs = await Blog.findAll({
-        where: {
-        $or: [
-        'title', 'content', 'category'
-        ].map(key => ({
-        [key]: {
-        $like: `%${search}%`, 
-        }
-        })),
-        },
-        order: [['updatedAt', 'DESC']]
-        })
-        } else {
-        blogs = await Blog.findAll({
-        order: [['updatedAt', 'DESC']]
-        })
-        }
-        res.send(blogs)
+            let blogs = null
+            const search = req.query.search
+            // console.log('search key: ' + search)
+            if (search) {
+                blogs = await Blog.findAll({
+                    where: {
+                        $or: [
+                            'title', 'content', 'category'
+                        ].map(key => ({
+                            [key]: {
+                                $like: `%${search}%`,
+                            }
+                        })),
+                    },
+                    order: [['updatedAt', 'DESC']]
+                })
+            } else {
+                blogs = await Blog.findAll({
+                    order: [['updatedAt', 'DESC']]
+                })
+            }
+            res.send(blogs)
         } catch (err) {
-        res.status(500).send({
-        error: 'an error has occured trying to fetch the blogs'
-        })
+            res.status(500).send({
+                error: 'an error has occured trying to fetch the blogs'
+            })
         }
-       },
+    },
     // create blog
     async create(req, res) {
         console.log(JSON.stringify(req.body))
@@ -58,9 +58,9 @@ module.exports = {
             })
         }
     },
-    
-// delete blog
-async remove(req, res) {
+
+    // delete blog
+    async remove(req, res) {
         try {
             const blog = await Blog.findOne({
                 where: {

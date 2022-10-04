@@ -4,7 +4,6 @@
 		<p>id: {{ blog.id }}</p>
 		<p>title: {{ blog.title }}</p>
 		<p>content: {{ blog.content }}</p>
-		
 		<p>category: {{ blog.category }}</p>
 		<p>status: {{ blog.status }}</p>
 		<p>
