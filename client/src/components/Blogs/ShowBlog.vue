@@ -7,14 +7,17 @@
 		<p>category: {{ blog.category }}</p>
 		<p>status: {{ blog.status }}</p>
 		<p>
-			<button v-on:click="navigateTo('/blog/edit/' + blog.id)">
-				แก้ไข blog
+			<button v-on:click="navigateTo('/blog/edit/' + blog.id)" class="btn btn-success">
+				Edit blog
 			</button>
-			<button v-on:click="navigateTo('/blogs')">กลั บ</button>
+			<button v-on:click="navigateTo('/blogs')" class="btn btn-warning">Back</button>
 		</p>
 	</div>
 </template>
 <script>
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery/src/jquery.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import BlogsService from "@/services/BlogsService";
 export default {
 	data() {

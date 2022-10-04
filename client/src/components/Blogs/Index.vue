@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="blog-header">
-			<h2>Blog Setting</h2>
+			<h5>Blog Setting</h5>
 			<div>
 				<form class="form-inline form-search">
 					<div class="form-group">
@@ -61,6 +61,9 @@
 	</div>
 </template>
 <script>
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery/src/jquery.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import BlogsService from '@/services/BlogsService'
 import _ from 'lodash'
 import ScrollMonitor from 'scrollMonitor'
