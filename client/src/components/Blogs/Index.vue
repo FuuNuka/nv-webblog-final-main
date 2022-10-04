@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="blog-header">
-			<h5>Blog Setting</h5>
+			<h2>Blog</h2>
 			<div>
 				<form class="form-inline form-search">
 					<div class="form-group">
