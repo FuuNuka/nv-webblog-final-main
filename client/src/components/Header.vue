@@ -1,20 +1,22 @@
-<template> 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light container" >
-    <router-link :to="{ name: 'blogs' }" class="navbar-brand" ><h1>Blog cafe</h1></router-link>
+<template>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark container header">
+    <router-link :to="{ name: 'blogs' }" class="navbar-brand">
+      <h1>Cafe</h1>
+    </router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item"> 
-          <router-link :to="{ name: 'users' }" class ="nav-link">User</router-link>
+        <li class="nav-item">
+          <router-link :to="{ name: 'users' }" class="nav-link">User</router-link>
         </li>
-        <router-link :to="{ name: 'comments' }" class ="nav-link">Comments</router-link>
-        <il class="nav-item"><router-link :to="{ name: 'blogShow' }" class ="nav-link">bog</router-link></il>
+        <router-link :to="{ name: 'comments' }" class="nav-link">Comments</router-link>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <router-link :to="{ name: 'login' }" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</router-link>
+        <router-link :to="{ name: 'login' }" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login
+        </router-link>
       </form>
     </div>
   </nav>
@@ -30,15 +32,19 @@ export default {
 
 </script>
 <style scoped>
-  body {
+body {
   margin: 0;
 }
 
-  .header {
+.header {
   background-color: #f1f1f1;
   padding: 20px;
+  margin-top: -70px;
+  margin-right: 150px;
+  margin-left: 100px;
   text-align: center;
 }
+
 .nv-navbar {
   background-color: palegoldenrod;
   width: 100%;
