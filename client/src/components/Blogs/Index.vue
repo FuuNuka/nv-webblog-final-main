@@ -27,7 +27,7 @@
 					<!-- </transition> -->
 				</div>
 				<h3>{{ blog.title }}</h3>
-				<div v-html="blog.content.slice(0,200) + '...'"></div>
+				<div v-html="blog.content.slice(0,200)"></div>
 				<div class="blog-info">
 					<p><strong>Colortone:</strong> {{ blog.category }}</p>
 					<p><strong>Create:</strong> {{ blog.createdAt }}</p>

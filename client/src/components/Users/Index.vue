@@ -3,10 +3,10 @@
     <p class="h2">Users</p>
     <form class="form-inline form-search">
       <div v-if="users.length">
-        <p class="h4">จำนวนผู้ใช้งาน {{ users.length }}</p>
+        <p class="h4">User {{ users.length }}</p>
         <p>
           <button v-on:click="navigateTo('/user/create')" class="btn btn-success">
-            สร้างผู้ใช้งาน
+            Create User
           </button>
         </p>
         <div v-for="user in users" v-bind:key="user.id" class="text-inbox box">

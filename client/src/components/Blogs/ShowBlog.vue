@@ -1,7 +1,6 @@
 <template>
 	<div class="container createcafe box">
 		<div class="blog-header">
-		<div v-for="blog in blogs" v-bind:key="blog.id" class="blog-list">
 			<!-- <p>id: {{ blog.id }}</p> -->
 			<div class="blog-pic">
 				<p class="h1 center">{{blog.title}}</p>
@@ -16,7 +15,7 @@
 			<button v-on:click="navigateTo('/blogs')" class="btn btn-warning">Back</button>
 		</div>
 		</div>
-	</div>
+
 </template>
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -95,14 +94,6 @@ export default {
 		},
 		navigateTo(route) {
 			this.$router.push(route)
-		},
-		async deleteBlog(blog) {
-			try {
-				await BlogsService.delete(blog)
-				this.refreshData()
-			} catch (err) {
-				console.log(err)
-			}
 		},
 		async refreshData() {
 			this.blogs = (await BlogsService.index()).data

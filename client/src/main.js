@@ -19,7 +19,7 @@ sync(store, router)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
+  router, 
   store,
   components: { App },
   template: '<App/>'
