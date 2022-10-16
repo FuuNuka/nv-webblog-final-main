@@ -33,7 +33,7 @@
 					<p><strong>Create:</strong> {{ blog.createdAt }}</p>
 					<!-- <p>status: {{ blog.status }}</p> -->
 					<p>
-						<button class="btn btn-sm btn-info" v-on:click="navigateTo('/blog/'+ blog.id)">View
+						<button class="btn btn-sm btn-info" v-on:click="navigateTo('/blog/'+ blog.id)">ควย
 							Blog</button>
 						<button class="btn btn-sm btn-warning" v-on:click="navigateTo('/blog/edit/'+ blog.id)">Edit
 							blog</button>
